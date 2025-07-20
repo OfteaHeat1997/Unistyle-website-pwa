@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Unistyles Icons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+        .icon-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .icon-item {
+            text-align: center;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        input {
+            padding: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Unistyles Icon Generator</h1>
+    <p>Use this tool to generate icon files for the Unistyles PWA.</p>
+    
+    <div>
+        <h2>Step 1: Customize Icon</h2>
+        <label for="bgColor">Background Color:</label>
+        <input type="color" id="bgColor" value="#000000"><br>
+        
+        <label for="textColor">Text Color:</label>
+        <input type="color" id="textColor" value="#ffffff"><br>
+        
+        <label for="iconText">Text (1-2 characters):</label>
+        <input type="text" id="iconText" value="U" maxlength="2"><br>
+        
+        <button onclick="generatePreview()">Preview Icon</button>
+    </div>
+    
+    <div>
+        <h2>Step 2: Preview</h2>
+        <canvas id="previewCanvas" width="192" height="192"></canvas>
+    </div>
+    
+    <div>
+        <h2>Step 3: Generate All Icons</h2>
+        <button onclick="generateAllIcons()">Generate All Icons</button>
+    </div>
+    
+    <div>
+        <h2>Step 4: Download Icons</h2>
+        <div class="icon-container" id="iconContainer"></div>
+    </div>
+    
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        
+        function generatePreview() {
+            const bgColor = document.getElementById('bgColor').value;
+            const textColor = document.getElementById('textColor').value;
+            const iconText = document.getElementById('iconText').value || 'U';
+            
+            const canvas = document.getElementById('previewCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw background
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw text
+            ctx.fillStyle = textColor;
+            ctx.font = 'bold 100px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(iconText, canvas.width / 2, canvas.height / 2);
+        }
+        
+        function generateIcon(size) {
+            const bgColor = document.getElementById('bgColor').value;
+            const textColor = document.getElementById('textColor').value;
+            const iconText = document.getElementById('iconText').value || 'U';
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Draw background
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw text
+            ctx.fillStyle = textColor;
+            ctx.font = `bold ${size / 2}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(iconText, canvas.width / 2, canvas.height / 2);
+            
+            return canvas;
+        }
+        
+        function generateAllIcons() {
+            const container = document.getElementById('iconContainer');
+            container.innerHTML = '';
+            
+            sizes.forEach(size => {
+                const canvas = generateIcon(size);
+                const iconItem = document.createElement('div');
+                iconItem.className = 'icon-item';
+                
+                // Add canvas to container
+                iconItem.appendChild(canvas);
+                
+                // Add download link
+                const downloadLink = document.createElement('a');
+                downloadLink.href = canvas.toDataURL('image/png');
+                downloadLink.download = `icon-${size}x${size}.png`;
+                downloadLink.textContent = `Download ${size}x${size}`;
+                downloadLink.style.display = 'block';
+                iconItem.appendChild(downloadLink);
+                
+                container.appendChild(iconItem);
+            });
+            
+            // Add favicon
+            const faviconCanvas = generateIcon(32);
+            const faviconItem = document.createElement('div');
+            faviconItem.className = 'icon-item';
+            
+            // Add canvas to container
+            faviconItem.appendChild(faviconCanvas);
+            
+            // Add download link
+            const faviconLink = document.createElement('a');
+            faviconLink.href = faviconCanvas.toDataURL('image/png');
+            faviconLink.download = 'favicon.ico';
+            faviconLink.textContent = 'Download favicon';
+            faviconLink.style.display = 'block';
+            faviconItem.appendChild(faviconLink);
+            
+            container.appendChild(faviconItem);
+        }
+        
+        // Generate preview on load
+        window.onload = generatePreview;
+    </script>
+</body>
+</html>

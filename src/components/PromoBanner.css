@@ -1,0 +1,41 @@
+.promo-banner {
+  background-color: var(--secondary-color);
+  padding: 0.75rem 0;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.promo-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.promo-link {
+  display: flex;
+  align-items: center;
+  font-size: var(--small-font-size);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color var(--transition-fast);
+}
+
+.promo-link:hover {
+  color: var(--accent-color);
+}
+
+.promo-icon {
+  margin-right: 8px;
+}
+
+.promo-arrow {
+  margin-left: 5px;
+  font-weight: var(--font-weight-bold);
+}
+
+@media (max-width: 576px) {
+  .promo-link {
+    font-size: 12px;
+  }
+}

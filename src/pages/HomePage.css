@@ -1,0 +1,25 @@
+.homepage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Add spacing between sections */
+.category-section {
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+}
+
+.recommendation-section {
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--spacing-xxl);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .category-section,
+  .recommendation-section {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .icon {
+            width: 32px;
+            height: 32px;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 20px auto;
+        }
+        p {
+            margin: 20px 0;
+        }
+        .instructions {
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Favicon Generator</h1>
+    <p>Right-click on the icon below and select "Save image as..." to save it as favicon.ico</p>
+    
+    <div class="icon" id="icon">U</div>
+    
+    <canvas id="canvas" width="32" height="32" style="display: none;"></canvas>
+    
+    <div class="instructions">
+        <h2>Quick Fix Instructions:</h2>
+        <ol>
+            <li>Right-click on the black square with "U" above and select "Save image as..."</li>
+            <li>Save it as "favicon.ico" in the public directory (not in the icons subdirectory)</li>
+            <li>Refresh your website to fix the immediate icon errors</li>
+        </ol>
+    </div>
+    
+    <script>
+        // Generate the icon as an image
+        window.onload = function() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const icon = document.getElementById('icon');
+            
+            // Draw background
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw text
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('U', canvas.width / 2, canvas.height / 2);
+            
+            // Convert to image
+            const dataUrl = canvas.toDataURL('image/png');
+            
+            // Create a link to download the image
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'favicon.ico';
+            
+            // Add the link to the page
+            const downloadButton = document.createElement('button');
+            downloadButton.textContent = 'Download Favicon';
+            downloadButton.onclick = function() {
+                link.click();
+            };
+            document.body.appendChild(downloadButton);
+            
+            // Also set the icon div background to the image
+            icon.style.backgroundImage = `url(${dataUrl})`;
+            icon.textContent = '';
+        };
+    </script>
+</body>
+</html>

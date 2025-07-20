@@ -1,0 +1,33 @@
+.notification-bar {
+  background-color: var(--notification-color);
+  padding: 0.5rem 0;
+  text-align: center;
+  font-size: var(--small-font-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--primary-color);
+}
+
+.notification-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notification-content p {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.highlight {
+  font-style: italic;
+  font-weight: var(--font-weight-regular);
+  margin-left: 5px;
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .notification-bar {
+    font-size: 12px;
+  }
+}
